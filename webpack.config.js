@@ -34,7 +34,10 @@ module.exports = {
         options: './src/scripts/options.js',
         styles: ['./src/styles/popup.scss', './src/styles/options.scss'],
         settings: './src/scripts/options.json',
-        opendyslexic: './src/fonts/OpenDyslexic-Regular.otf'
+        opendyslexic: './src/fonts/OpenDyslexic-Regular.ttf',
+        opendyslexicbold: './src/fonts/OpenDyslexic-Bold.ttf',
+        opendyslexicitalic: './src/fonts/OpenDyslexic-Italic.ttf',
+        opendyslexicbolditalic: './src/fonts/OpenDyslexic-BoldItalic.ttf'
     },
 
     output: {
@@ -93,7 +96,7 @@ module.exports = {
                 loader: 'file-loader',
                 options: {
                     limit: 10000,
-                    name: '[name].[ext]'
+                    name: './fonts/[name].[ext]'
                 }
             },
             {

@@ -27,7 +27,14 @@ const manifestInput = {
     __firefox__applications: {
         gecko: { id: '{754FB1AD-CC3B-4856-B6A0-7786F8CA9D17}' },
     },
-
+    "web_accessible_resources": [{
+        "resources": ["test1.png", "test2.png"],
+        "matches": ["https://web-accessible-resources-1.glitch.me/*"]
+    }, {
+        "resources": ["test3.png", "test4.png"],
+        "matches": ["https://web-accessible-resources-2.glitch.me/*"],
+        "use_dynamic_url": true
+    }],
     __chrome__minimum_chrome_version: '49',
     __opera__minimum_opera_version: '36',
 
@@ -57,12 +64,10 @@ const manifestInput = {
         '__chrome|opera__persistent': false,
     },
 
-    content_scripts: [
-        {
-            matches: ['http://*/*', 'https://*/*'],
-            js: ['js/contentScript.bundle.js'],
-        },
-    ],
+    content_scripts: [{
+        matches: ['http://*/*', 'https://*/*'],
+        js: ['js/contentScript.bundle.js'],
+    }, ],
 };
 
 module.exports = manifestInput;

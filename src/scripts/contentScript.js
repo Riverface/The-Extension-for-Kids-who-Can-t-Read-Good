@@ -3,7 +3,6 @@ import * as $ from 'jquery';
 import browser from 'webextension-polyfill';
 import { v4 } from 'uuid';
 
-import 'open-dyslexic/index.js';
 
 function getWordAtPoint(elem, x, y) {
     if (elem.nodeType == elem.TEXT_NODE) {
@@ -57,13 +56,20 @@ $(document).ready(function() {
     const readerOffsetY = 50;
     let readerId = `reader`;
     let readerContentId = `readerContent`;
+
     let readerHandleId = `readerHandle`;
     $('body').append(`<div id='${readerId}'></div>`);
+
     $(`#${readerId}`).draggable();
+
     $('#reader').html(`<div id='${readerHandleId}'></div><div id='${readerContentId}'></div><button id='readerDragButton'></button>`);
+
     const firstFrame = false;
+
     let timer = 5;
+
     $('#reader').draggable({ handle: '#readerHandle' });
+
     setInterval(function() {
         if (timer === 5) {
             timer = 0;
@@ -73,7 +79,11 @@ $(document).ready(function() {
         }
         timer += 1;
     }, 1000);
+
+    $('body').append('<div id="readerHUD"></div>');
+
     $('body').append('<div id="blurrem"></div>');
+
     $('#blurrem').css({
         'z-index': '-1',
         width: '100%',
@@ -84,35 +94,39 @@ $(document).ready(function() {
         top: 0,
         left: 0
     })
+
     $('#blurrem').css({ filter: 'blur(10px)' })
 
     console.log($('reader'));
     $('#reader').css({ filter: 'blur(0px)' })
+
     $('#readerHandle').text('Reader');
+
     $(`#readerHandle`).css({
         height: '30px',
         width: 'auto',
-        border: '1px',
-        'border-top-left-radius': '10px',
-        'border-top-right-radius': '10px',
+        'border-top-left-radius': '5px',
+        'border-top-right-radius': '5px',
         'z-index': 999999,
         'background-color': 'green'
     });
+
     $('#readerButton').css({
-        width: '50px',
+        width: '100px',
         'position': 'absolute',
         top: '50px',
     });
+
     $('reader').css({
         width: '50px',
         'position': 'absolute',
         top: '50px',
     });
+
     $(`#readerHUD`).css({
         position: 'fixed',
-        height: '100px',
-        'max-width': '300px',
-        'min-width': '250px',
+        height: '150px',
+        'width': '300px',
         border: '3px solid black',
         left: '50%',
         top: '50%',
@@ -120,11 +134,36 @@ $(document).ready(function() {
         'border-radius': '10px',
         'text-align': 'center'
     });
+
     $(`#${readerId}`).css({
         position: 'fixed',
-        height: '100px',
-        'max-width': '300px',
-        'min-width': '250px',
+        height: '150px',
+        'width': '300px',
+        border: '3px solid black',
+        left: '50%',
+        top: '50%',
+        'z-index': 99999,
+        'border-radius': '10px',
+        'text-align': 'center',
+        'font-family': 'OpenDyslexic-Regular'
+    });
+
+    $(`#HUDcontent`).css({
+        position: 'fixed',
+        height: '150px',
+        'width': '300px',
+        border: '3px solid black',
+        left: '50%',
+        top: '50%',
+        'z-index': 99999,
+        'border-radius': '10px',
+        'text-align': 'center'
+    });
+
+    $(`#HUDhandle`).css({
+        position: 'fixed',
+        height: '150px',
+        'width': '300px',
         border: '3px solid black',
         left: '50%',
         top: '50%',
@@ -153,7 +192,7 @@ $(document).ready(function() {
             const screenOffsetY = e.originalEvent.y / 10;
             if (dragOption === false) {
                 $('#reader').draggable('disable');
-                if (e.originalEvent.x < (e.clientX / 2)) {
+                if (e.originalEvent.x < (e.screenX / 2)) {
                     $(`#reader`).css({
                         top: e.originalEvent.y + readerOffsetY,
                         left: e.originalEvent.x - readerOffsetX,
@@ -176,6 +215,7 @@ $(document).ready(function() {
         if (currentWord !== '' && currentWord !== null && currentWord !== undefined) {
             if (currentWord.length < 150) {
                 $('#readerContent').text(currentWord);
+                $('#readerTarget').text(currentWord);
                 toPopup.postMessage(currentWord);
             }
         }
