@@ -1,0 +1,52 @@
+#readerHandle {
+    height: 30px;
+    width: auto;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    z-index: 999999;
+    background-color: green;
+}
+
+#reader {
+    position: fixed;
+    height: 150px;
+    width: 300px;
+    border: 3px solid black;
+    left: 50%;
+    top: 50%;
+    z-index: 99999;
+    border-radius: 10px;
+    text-align: center;
+}
+
+#readerContent {
+    font-family: opendyslexic;
+}
+
+#HUDcontent {
+    position: fixed;
+    height: 150px;
+    width: 300px;
+    border: 3px solid black;
+    left: 25%;
+    top: 75%;
+    z-index: 99999;
+    border-radius: 10px;
+    text-align: center;
+}
+
+#HUDhandle {
+    height: 30px;
+    width: auto;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    z-index: 999999;
+    background-color: green;
+}
+
+#blurrem {
+    left: 0;
+    top: 0;
+    height: auto;
+    width: auto;
+}

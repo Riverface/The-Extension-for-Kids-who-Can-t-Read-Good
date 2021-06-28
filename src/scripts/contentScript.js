@@ -2,7 +2,11 @@ import 'jquery-ui-dist/jquery-ui';
 import * as $ from 'jquery';
 import browser from 'webextension-polyfill';
 import { v4 } from 'uuid';
-
+import styles from '../styles/fonts.css';
+import opendyslexic from '../fonts/OpenDyslexic-Regular.ttf'
+$('head').prepend(`<style>  @font-face { font-family: "opendyslexic"; src: url(${chrome.extension.getURL('/fonts/OpenDyslexic-Regular.ttf')}); }</style > `);
+const toPopup = new BroadcastChannel('toPopup');
+$('body').append('<div id=""> </div>');
 
 function getWordAtPoint(elem, x, y) {
     if (elem.nodeType == elem.TEXT_NODE) {
@@ -26,7 +30,6 @@ function getWordAtPoint(elem, x, y) {
                         secondary++;
                     }
                 }
-
                 var ret = range.toString();
                 range.detach();
                 return (ret);
@@ -48,28 +51,22 @@ function getWordAtPoint(elem, x, y) {
     }
     return (null);
 }
-const toPopup = new BroadcastChannel('toPopup');
-$('body').append('<div id=""> </div>');
+
+
 $(document).ready(function() {
     let dragOption = true;
     const readerOffsetX = 50;
     const readerOffsetY = 50;
     let readerId = `reader`;
     let readerContentId = `readerContent`;
-
     let readerHandleId = `readerHandle`;
     $('body').append(`<div id='${readerId}'></div>`);
-
     $(`#${readerId}`).draggable();
-
-    $('#reader').html(`<div id='${readerHandleId}'></div><div id='${readerContentId}'></div><button id='readerDragButton'></button>`);
-
+    $('#reader').html(`<div id='${readerHandleId}'></div><div id='${readerContentId}'></div>`);
     const firstFrame = false;
-
     let timer = 5;
 
     $('#reader').draggable({ handle: '#readerHandle' });
-
     setInterval(function() {
         if (timer === 5) {
             timer = 0;
@@ -79,111 +76,31 @@ $(document).ready(function() {
         }
         timer += 1;
     }, 1000);
-
-    $('body').append('<div id="readerHUD"></div>');
+    $('body').append('<div id="readerHUD"><div id="HUDcontent"><button id="readerDragButton"/></div><div id="HUDhandle"></div></div>');
 
     $('body').append('<div id="blurrem"></div>');
-
-    $('#blurrem').css({
-        'z-index': '-1',
-        width: '100%',
-        height: '100%',
-        position: 'fixed',
-        filter: 'blur(1px)',
-        'opacity': '100%',
-        top: 0,
-        left: 0
-    })
-
-    $('#blurrem').css({ filter: 'blur(10px)' })
-
+    $('p').css({ filter: 'blur(10px)' })
     console.log($('reader'));
     $('#reader').css({ filter: 'blur(0px)' })
-
     $('#readerHandle').text('Reader');
-
-    $(`#readerHandle`).css({
-        height: '30px',
-        width: 'auto',
-        'border-top-left-radius': '5px',
-        'border-top-right-radius': '5px',
-        'z-index': 999999,
-        'background-color': 'green'
-    });
-
-    $('#readerButton').css({
+    $('#readerDragButton').css({
         width: '100px',
+        height: '50px',
         'position': 'absolute',
         top: '50px',
     });
-
     $('reader').css({
         width: '50px',
         'position': 'absolute',
         top: '50px',
     });
 
-    $(`#readerHUD`).css({
-        position: 'fixed',
-        height: '150px',
-        'width': '300px',
-        border: '3px solid black',
-        left: '50%',
-        top: '50%',
-        'z-index': 99999,
-        'border-radius': '10px',
-        'text-align': 'center'
-    });
 
-    $(`#${readerId}`).css({
-        position: 'fixed',
-        height: '150px',
-        'width': '300px',
-        border: '3px solid black',
-        left: '50%',
-        top: '50%',
-        'z-index': 99999,
-        'border-radius': '10px',
-        'text-align': 'center',
-        'font-family': 'OpenDyslexic-Regular'
-    });
-
-    $(`#HUDcontent`).css({
-        position: 'fixed',
-        height: '150px',
-        'width': '300px',
-        border: '3px solid black',
-        left: '50%',
-        top: '50%',
-        'z-index': 99999,
-        'border-radius': '10px',
-        'text-align': 'center'
-    });
-
-    $(`#HUDhandle`).css({
-        position: 'fixed',
-        height: '150px',
-        'width': '300px',
-        border: '3px solid black',
-        left: '50%',
-        top: '50%',
-        'z-index': 99999,
-        'border-radius': '10px',
-        'text-align': 'center',
-        'font-family': 'OpenDyslexic-Regular'
-    });
-
-    $('#readerContent').css({
-        'font-size': 'x-large',
-        'font-family': 'OpenDyslexic-Regular'
-    });
     $('#readerDragButton').on('click', function() {
         dragOption = !dragOption
         console.log(dragOption);
     });
-
     let currentWord = '';
-
     $(document).mousemove(function(e) {
         console.log(e)
         currentWord = getWordAtPoint(e.target, e.originalEvent.x, e.originalEvent.y);
@@ -214,7 +131,7 @@ $(document).ready(function() {
         });
         if (currentWord !== '' && currentWord !== null && currentWord !== undefined) {
             if (currentWord.length < 150) {
-                $('#readerContent').text(currentWord);
+                $('#readerContent').html(currentWord);
                 $('#readerTarget').text(currentWord);
                 toPopup.postMessage(currentWord);
             }
@@ -226,5 +143,4 @@ $(document).ready(function() {
         $(`#${readerContentId}`).html(`${e.data}`);
         console.log('Received', e.data);
     };
-
 });

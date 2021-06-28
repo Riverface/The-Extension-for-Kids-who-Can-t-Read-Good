@@ -100,5 +100,3 @@ public/
 *.sass.map
 *.scss.map
 
-## Build directory
-extension

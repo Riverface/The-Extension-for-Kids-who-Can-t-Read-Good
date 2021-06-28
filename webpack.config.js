@@ -26,18 +26,13 @@ const getExtensionFileType = () => {
 
 module.exports = {
     mode: 'development',
-
     entry: {
-        background: './src/scripts/background.js',
+
         contentScript: './src/scripts/contentScript.js',
         popup: './src/scripts/popup.js',
         options: './src/scripts/options.js',
         styles: ['./src/styles/popup.scss', './src/styles/options.scss'],
-        settings: './src/scripts/options.json',
-        opendyslexic: './src/fonts/OpenDyslexic-Regular.ttf',
-        opendyslexicbold: './src/fonts/OpenDyslexic-Bold.ttf',
-        opendyslexicitalic: './src/fonts/OpenDyslexic-Italic.ttf',
-        opendyslexicbolditalic: './src/fonts/OpenDyslexic-BoldItalic.ttf'
+        settings: './src/scripts/options.json'
     },
 
     output: {
@@ -68,6 +63,12 @@ module.exports = {
             chunks: ['popup'],
             filename: 'popup.html',
         }),
+        new HtmlWebpackPlugin({
+            template: 'src/background.html',
+            // inject: false,
+            chunks: ['background'],
+            filename: 'background.html',
+        }),
         new CopyWebpackPlugin([{ from: 'src/assets', to: 'assets' }]),
         new WriteWebpackPlugin([{ name: manifest.name, data: Buffer.from(manifest.content) }]),
     ],
@@ -92,25 +93,41 @@ module.exports = {
                 },
             },
             {
-                test: /\.(woff2?|eot|ttf|otf)$/,
-                loader: 'file-loader',
-                options: {
-                    limit: 10000,
-                    name: './fonts/[name].[ext]'
-                }
+                test: /\.ttf$/,
+                use: [{
+                    loader: 'ttf-loader',
+                    options: {
+                        name: './fonts/[name].[ext]',
+                    },
+                }, ]
             },
             {
-                test: /\.css$/i,
-                use: ["style-loader", "css-loader"],
+                test: /\.css$/,
+                use: ["style-loader", "css-loader"]
             },
             {
                 test: /\.scss$/,
                 use: [{
                         loader: 'file-loader',
                         options: {
-                            name: '[name].css',
+                            name: '[name].[ext]',
                             context: './src/styles/',
                             outputPath: 'css/',
+                        },
+                    }, {
+                        loader: 'file-loader',
+                        options: {
+                            name: './assets/[name].[ext]',
+                            context: './src/assets/',
+                            outputPath: 'assets/',
+                        },
+                    },
+                    {
+                        loader: 'file-loader',
+                        options: {
+                            name: './fonts/[name].[ext]',
+                            context: './src/fonts/',
+                            outputPath: 'fonts/',
                         },
                     },
                     'extract-loader',

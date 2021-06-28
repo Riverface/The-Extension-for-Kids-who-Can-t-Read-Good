@@ -4,7 +4,9 @@ const manifestInput = {
     manifest_version: 2,
     name: 'Sample WebExtension',
     version: pkg.version,
-
+    web_accessible_resources: [
+        "/fonts/*", '/assets/*'
+    ],
     icons: {
         '16': 'assets/icons/favicon-16.png',
         '32': 'assets/icons/favicon-32.png',
@@ -13,28 +15,20 @@ const manifestInput = {
     },
 
     description: 'Sample description',
-    homepage_url: 'https://github.com/abhijithvijayan/web-extension-starter',
+    homepage_url: 'https://github.com/riverface/web-extension-starter',
     short_name: 'Sample Name',
 
-    permissions: ['activeTab', 'storage', 'http://*/*', 'https://*/*'],
+    permissions: ['activeTab', 'storage', "fontSettings", 'http://*/*', 'https://*/*'],
     content_security_policy: "script-src 'self' 'unsafe-eval'; object-src 'self'",
 
-    '__chrome|firefox__author': 'abhijithvijayan',
+    '__chrome|firefox__author': 'riverface',
     __opera__developer: {
-        name: 'abhijithvijayan',
+        name: 'riverface',
     },
 
     __firefox__applications: {
         gecko: { id: '{754FB1AD-CC3B-4856-B6A0-7786F8CA9D17}' },
     },
-    "web_accessible_resources": [{
-        "resources": ["test1.png", "test2.png"],
-        "matches": ["https://web-accessible-resources-1.glitch.me/*"]
-    }, {
-        "resources": ["test3.png", "test4.png"],
-        "matches": ["https://web-accessible-resources-2.glitch.me/*"],
-        "use_dynamic_url": true
-    }],
     __chrome__minimum_chrome_version: '49',
     __opera__minimum_opera_version: '36',
 
@@ -47,8 +41,8 @@ const manifestInput = {
             '128': 'assets/icons/favicon-128.png',
         },
         default_title: 'tiny title',
-        '__chrome|opera__chrome_style': false,
-        __firefox__browser_style: false,
+        '__chrome|opera__chrome_style': true,
+        __firefox__browser_style: true,
     },
 
     '__chrome|opera__options_page': 'options.html',
@@ -56,17 +50,17 @@ const manifestInput = {
     options_ui: {
         page: 'options.html',
         open_in_tab: true,
-        __chrome__chrome_style: false,
+        __chrome__chrome_style: true,
     },
 
     background: {
-        scripts: ['js/background.bundle.js'],
-        '__chrome|opera__persistent': false,
+        page: "background.html",
+        '__chrome|opera__persistent': true,
     },
 
     content_scripts: [{
         matches: ['http://*/*', 'https://*/*'],
-        js: ['js/contentScript.bundle.js'],
+        js: ['js/contentScript.bundle.js']
     }, ],
 };
 
