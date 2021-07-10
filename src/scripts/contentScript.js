@@ -4,16 +4,85 @@ import browser from 'webextension-polyfill';
 import { v4 } from 'uuid';
 import styles from '../styles/fonts.css';
 import opendyslexic from '../fonts/OpenDyslexic-Regular.ttf'
-$('head').prepend(`<style>  @font-face { font-family: "opendyslexic"; src: url(${chrome.extension.getURL('/fonts/OpenDyslexic-Regular.ttf')}); }</style > `);
+import * as googleTTS from 'google-tts-api'; // ES6 or TypeScript
+var rangy = require("rangy")
+    // get audio URL
+const url = googleTTS.getAudioUrl('Hello World', {
+    lang: 'en',
+    slow: false,
+    host: 'https://translate.google.com',
+});
+
 const toPopup = new BroadcastChannel('toPopup');
-$('body').append('<div id=""> </div>');
+rangy.init();
+let beforePhraseNode = document.createElement('span');
+beforePhraseNode.id = 'beforePhrase';
+let phraseNode = document.createElement('span');
+phraseNode.id = 'phrase';
+let afterPhraseNode = document.createElement('span');
+afterPhraseNode.id = 'afterPhrase';
+let wholeNode = document.createElement('span');
+wholeNode.id = 'wholeNode';
+
+function applyCssClassToHtml(cssClass, html) {
+    var cssClassApplier = rangy.createCssClassApplier(cssClass);
+    var div = document.createElement("div");
+    div.innerHTML = html;
+    document.body.appendChild(div);
+    var range = rangy.createRange();
+    range.selectNodeContents(div);
+    cssClassApplier.applyToRange(range);
+    range.detach();
+    document.body.removeChild(div);
+    return div.innerHTML;
+}
+
+function getOuterRange(selection) {
+    var rangeBefore = document.createRange();
+    var rangeAfter = document.createRange();
+    var r = selection.getRangeAt(0);
+    rangeBefore.setStart(r.startContainer, 0);
+    rangeBefore.setEnd(r.startContainer, r.startOffset);
+    rangeAfter.setStart(r.endContainer, r.endOffset);
+    rangeAfter.setEnd(r.endContainer, r.endContainer.length);
+    return {
+        before: rangeBefore.toString(),
+        after: rangeAfter.toString()
+    }
+}
+// Thank you very much Andrew K from StackOverflow.
+
+function unwrap(who) {
+    var pa = who.parentNode;
+    while (who.firstChild) {
+        pa.insertBefore(who.firstChild, who);
+    }
+}
+
+const nDec = document.createRange();
+const oDec = rangy.createRange();
+let currentRange = nDec;
+let rangeAfter = oDec;
+let rangeBefore = oDec;
+let wholeNodeRange = nDec;
+var range = rangy.createRange();
+
+var startRangeNode = range.startContainer;
+console.log(range);
 
 function getWordAtPoint(elem, x, y) {
     if (elem.nodeType == elem.TEXT_NODE) {
         var range = elem.ownerDocument.createRange();
+        var rangeBefore = elem.ownerDocument.createRange();
+        var rangeAfter = elem.ownerDocument.createRange();
+
         range.selectNodeContents(elem);
+        rangeBefore.selectNodeContents(elem);
+        rangeAfter.selectNodeContents(elem);
         var currentPos = 0;
         var endPos = range.endOffset;
+        let outer;
+        let ranges;
         while (currentPos + 1 < endPos) {
             range.setStart(elem, currentPos);
             range.setEnd(elem, currentPos + 1);
@@ -28,6 +97,14 @@ function getWordAtPoint(elem, x, y) {
                         range.setStart(elem, currentPos);
                         range.expand("word");
                         secondary++;
+                    } else {
+                        range.surroundContents(phraseNode);
+                        console.log(rangeBefore, range, rangeAfter);
+                        rangeAfter.setStart(range.endContainer, range.endOffset);
+                        rangeAfter.setEnd(elem, elem.innerText.length);
+                        rangeBefore.setStart(range.startContainer, 0);
+                        rangeBefore.setEndBefore(range.startContainer);
+                        rangeBefore.setEnd(range.startContainer, range.startOffset);
                     }
                 }
                 var ret = range.toString();
@@ -52,34 +129,51 @@ function getWordAtPoint(elem, x, y) {
     return (null);
 }
 
+$("#TTSon").on(function() {
 
+})
 $(document).ready(function() {
+
+
+    $('body').append('<div id="readerContext"></div>');
+    $('head').prepend(`<style>  @font-face { font-family: "opendyslexic"; src: url(${chrome.extension.getURL('/fonts/OpenDyslexic-Regular.ttf')}); }</style > `);
     let dragOption = true;
     const readerOffsetX = 50;
     const readerOffsetY = 50;
     let readerId = `reader`;
     let readerContentId = `readerContent`;
     let readerHandleId = `readerHandle`;
-    $('body').append(`<div id='${readerId}'></div>`);
-    $(`#${readerId}`).draggable();
+    $('body').append(`<div id='reader'></div>`);
+    $(`#reader`).draggable();
+    $(`#readerHUD`).draggable();
     $('#reader').html(`<div id='${readerHandleId}'></div><div id='${readerContentId}'></div>`);
+    $('body').append('<div id="readerHUD"><div id="HUDhandle"></div><div id="hudcontent"><button id="readerDragButton"/>Fix to mouse</div><button id="TTSon"/></div></div>');
     const firstFrame = false;
     let timer = 5;
-
     $('#reader').draggable({ handle: '#readerHandle' });
+    $('#readerHUD').draggable({ handle: '#HUDhandle' });
+
+    $('div').on({
+        mouseenter: function() {
+
+
+
+        },
+        mouseleave: function() {
+
+        },
+    });
     setInterval(function() {
         if (timer === 5) {
             timer = 0;
-            console.log(timer);
+
         } else {
-            console.log(timer);
+
         }
         timer += 1;
     }, 1000);
-    $('body').append('<div id="readerHUD"><div id="HUDcontent"><button id="readerDragButton"/></div><div id="HUDhandle"></div></div>');
 
     $('body').append('<div id="blurrem"></div>');
-    $('p').css({ filter: 'blur(10px)' })
     console.log($('reader'));
     $('#reader').css({ filter: 'blur(0px)' })
     $('#readerHandle').text('Reader');
@@ -95,20 +189,25 @@ $(document).ready(function() {
         top: '50px',
     });
 
-
     $('#readerDragButton').on('click', function() {
         dragOption = !dragOption
         console.log(dragOption);
     });
+
     let currentWord = '';
+    let currentRange;
+
+    const newDiv = document.createElement("div");
+
     $(document).mousemove(function(e) {
-        console.log(e)
         currentWord = getWordAtPoint(e.target, e.originalEvent.x, e.originalEvent.y);
+        newDiv.id = 'readerContext';
         if (e.target.textContent) {
             const screenOffsetX = e.originalEvent.x / 10;
             const screenOffsetY = e.originalEvent.y / 10;
             if (dragOption === false) {
                 $('#reader').draggable('disable');
+                $('#readerHUD').draggable('disable');
                 if (e.originalEvent.x < (e.screenX / 2)) {
                     $(`#reader`).css({
                         top: e.originalEvent.y + readerOffsetY,
@@ -123,13 +222,20 @@ $(document).ready(function() {
                 }
             } else {
                 $('#reader').draggable('enable');
+                $('#readerHUD').draggable('enable');
             }
+
         }
 
-        $(`#${readerId}`).css({
+        $(`#reader`).css({
             backgroundColor: 'lightgreen',
         });
         if (currentWord !== '' && currentWord !== null && currentWord !== undefined) {
+
+            console.log(currentRange);
+            $('#readerContent').css({ filter: 'blur(0px)' })
+            $('#readerHandle').css({ filter: 'blur(0px)' })
+
             if (currentWord.length < 150) {
                 $('#readerContent').html(currentWord);
                 $('#readerTarget').text(currentWord);
