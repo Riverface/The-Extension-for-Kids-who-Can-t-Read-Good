@@ -1,3 +1,29 @@
+#readerContext {
+    position: fixed;
+    display: inline;
+    text-align: left;
+}
+
+#beforePhrase {
+    filter: blur(10px);
+    white-space: nowrap;
+}
+
+#phrase {
+    filter: blur(0px);
+    white-space: nowrap;
+}
+
+#afterPhrase {
+    filter: blur(10px);
+    white-space: nowrap;
+}
+
+#wholeNode {
+    filter: blur(10px);
+    white-space: nowrap;
+}
+
 #readerHandle {
     height: 30px;
     width: auto;
@@ -23,16 +49,19 @@
     font-family: opendyslexic;
 }
 
-#HUDcontent {
+#HUDcontent {}
+
+#readerHUD {
     position: fixed;
     height: 150px;
     width: 300px;
     border: 3px solid black;
-    left: 25%;
+    left: 10%;
     top: 75%;
     z-index: 99999;
     border-radius: 10px;
     text-align: center;
+    background-color: aliceblue;
 }
 
 #HUDhandle {
@@ -44,9 +73,10 @@
     background-color: green;
 }
 
-#blurrem {
-    left: 0;
-    top: 0;
-    height: auto;
-    width: auto;
+button {
+    background-color: aliceblue;
+}
+
+.blurrem {
+    filter: blur(10px)
 }

@@ -98,7 +98,7 @@ function getWordAtPoint(elem, x, y) {
                         range.expand("word");
                         secondary++;
                     } else {
-                        range.surroundContents(phraseNode);
+                        // range.surroundContents(phraseNode);
                         console.log(rangeBefore, range, rangeAfter);
                         rangeAfter.setStart(range.endContainer, range.endOffset);
                         rangeAfter.setEnd(elem, elem.innerText.length);

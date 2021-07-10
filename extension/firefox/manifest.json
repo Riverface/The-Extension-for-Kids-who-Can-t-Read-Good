@@ -2,6 +2,10 @@
   "manifest_version": 2,
   "name": "Sample WebExtension",
   "version": "1.1.0",
+  "web_accessible_resources": [
+    "/fonts/*",
+    "/assets/*"
+  ],
   "icons": {
     "16": "assets/icons/favicon-16.png",
     "32": "assets/icons/favicon-32.png",
@@ -9,16 +13,17 @@
     "128": "assets/icons/favicon-128.png"
   },
   "description": "Sample description",
-  "homepage_url": "https://github.com/abhijithvijayan/web-extension-starter",
+  "homepage_url": "https://github.com/riverface/web-extension-starter",
   "short_name": "Sample Name",
   "permissions": [
     "activeTab",
     "storage",
+    "fontSettings",
     "http://*/*",
     "https://*/*"
   ],
   "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
-  "author": "abhijithvijayan",
+  "author": "riverface",
   "applications": {
     "gecko": {
       "id": "{754FB1AD-CC3B-4856-B6A0-7786F8CA9D17}"
@@ -33,16 +38,14 @@
       "128": "assets/icons/favicon-128.png"
     },
     "default_title": "tiny title",
-    "browser_style": false
+    "browser_style": true
   },
   "options_ui": {
     "page": "options.html",
     "open_in_tab": true
   },
   "background": {
-    "scripts": [
-      "js/background.bundle.js"
-    ]
+    "page": "background.html"
   },
   "content_scripts": [
     {
