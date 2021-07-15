@@ -1,119 +1,38 @@
-<h1 align="center">🚀 web-extension-starter</h1>
-<p align="center">Web Extension starter to build "Write Once Run on Any Browser" extension</p>
+# The Extension for Kids who Can't Read Good
 
-## Features
 
-- Cross Browser Support (Web-Extensions API)
-- Browser Taylored Manifest generation
-- Automatic build on code changes.
-- Auto packs browser specific build files
-- ES6 modules support
-- SASS styling
 
-## Browser Support
+## And want to do other things good too.
 
-| [![Chrome](https://raw.github.com/alrra/browser-logos/master/src/chrome/chrome_48x48.png)](https://chrome.google.com/webstore/detail/kutt/pklakpjfiegjacoppcodencchehlfnpd) | [![Firefox](https://raw.github.com/alrra/browser-logos/master/src/firefox/firefox_48x48.png)](https://addons.mozilla.org/firefox/addon/kutt/) | [![Opera](https://raw.github.com/alrra/browser-logos/master/src/opera/opera_48x48.png)](CONTRIBUTING.md#for-opera-users) | [![Yandex](https://raw.github.com/alrra/browser-logos/master/src/yandex/yandex_48x48.png)](https://chrome.google.com/webstore/detail/kutt/pklakpjfiegjacoppcodencchehlfnpd) | [![Brave](https://raw.github.com/alrra/browser-logos/master/src/brave/brave_48x48.png)](https://chrome.google.com/webstore/detail/kutt/pklakpjfiegjacoppcodencchehlfnpd) | [![vivaldi](https://raw.github.com/alrra/browser-logos/master/src/vivaldi/vivaldi_48x48.png)](https://chrome.google.com/webstore/detail/kutt/pklakpjfiegjacoppcodencchehlfnpd) |
-![Edge](https://raw.github.com/alrra/browser-logos/master/src/edge/edge_48x48.png) |
-| --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| 49 & later ✔ | 52 & later ✔ | 36 & later ✔ | Latest ✔ | Latest ✔ | Latest ✔ | Latest ✔
 
-## Demo
+### This is an extension made for Chrome, Firefox, and Opera. It works on Brave too.
 
-- [abhijithvijayan/kutt-extension](https://github.com/abhijithvijayan/kutt-extension)
+In the proposal I was ambitious and only one thing seems to work at the end of the day. For a few weeks I attempted to get contextual blurring working so that only the words around the cursor are legible, so that people with dyslexia and ADHD have an easier time focusing on them.
 
-## 🚀 Quick Start
+In working with document ranges, I have found that ranges have a lot of rules I'm still not aware of. The result is primitive and I have some regrets. I made one out of three goals a reality, separating text to a separate window using work from [StackOverflow](https://stackoverflow.com/questions/2444430/how-to-get-a-word-under-cursor-using-javascript). The rest of the time was trying to finagle ranges into selecting an entire div and blurring things out of the cursor range. There are [other](https://developer.mozilla.org/en-US/docs/Web/API/Range/commonAncestorContainer) [leads](https://github.com/timdown/rangy/wiki/Rangy-Object) I was looking at as the project time came to a close.
 
-- `yarn install` to install dependencies.
-- `yarn run dev:chrome` to start the development server for chrome extension.
-- `yarn run dev:firefox` to start the development server for firefox addon.
-- `yarn run dev:opera` to start the development server for opera extension.
-- `yarn run build:chrome` to build chrome extension.
-- `yarn run build:firefox` to build firefox addon.
-- `yarn run build:opera` to build opera extension.
-- `yarn run build` builds and packs extensions all at once to extension/ directory.
+
+
+## Installation
+
+In Releases you can find binaries and source files. On Chrome Store you can find a quick installation button.
+
 
 ## Usage
 
-Update `src/manifest/index.js` file with browser vendor prefixed manifest keys
+When you click the icon, the reader will show. It's a window that displays the text under your cursor.
+You can snap it to the cursor as well.
 
-```js
-{
-  "__chrome__name": "SuperChrome",
-  "__firefox__name": "SuperFox",
-  "__edge__name": "SuperEdge",
-  "__opera__name": "SuperOpera"
-}
-```
 
-if the vendor is `chrome` this compiles to:
+## Technologies
+`Manifest 2`
 
-```js
-{
-  "name": "SuperChrome",
-}
-```
+`web-extension-starter`
 
----
 
-Add keys to multiple vendors by seperating them with | in the prefix
 
-```
-{
-  __chrome|opera__name: "SuperBlink"
-}
-```
 
-if the vendor is `chrome` or `opera`, this compiles to:
+## License
+Web Extension Starter - https://github.com/abhijithvijayan/web-extension-starter Copyright (c) 2019 Abhijith Vijayan
 
-```
-{
-  "name": "SuperBlink"
-}
-```
-
-See the original [README](https://github.com/abhijithvijayan/wext-manifest) of wext-manifest package for more details
-
-### Development
-
-- `yarn install` to install dependencies.
-- To watch file changes in developement
-
-  - Chrome
-    - `yarn run dev:chrome`
-  - Firefox
-    - `yarn run dev:firefox`
-  - Opera
-    - `yarn run dev:opera`
-
-  (Reload Extension Manually in the browser)
-
-- **Load extension in browser**
-
-  - ### Chrome
-
-    - Go to the browser address bar and type `chrome://extensions`
-    - Check the `Developer Mode` button to enable it.
-    - Click on the `Load Unpacked Extension…` button.
-    - Select your extension’s extracted directory.
-
-  - ### Firefox
-
-    - Load the Add-on via `about:debugging` as temporary Add-on.
-    - Choose the `manifest.json` file in the extracted directory
-
-  - ### Opera
-
-    - Load the extension via `opera:extensions`
-    - Check the `Developer Mode` and load as unpacked from extension’s extracted directory.
-
-### Production
-
-- `yarn run build` builds the extension for all the browsers to `extension/BROWSER` directory respectively.
-
-## Show your support
-
-Give a ⭐️ if this project helped you!
-
-## Licence
-
-Code released under the [MIT License](LICENSE).
+Extension - Copyright (c) 2021 Robert Smith

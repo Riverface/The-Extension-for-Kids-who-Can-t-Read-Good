@@ -1,0 +1,27 @@
+Name of Student: Robert Smith	
+Name of Project: "the extension for kids who cant read good"
+Project's Purpose or Goal: (What will it do for users?)
+My extension will employ a few different strategies that are assumed to help with reading.  My goal is to try to have three methods of reading assistance that are accessible at all times, in any combination.
+
+List the absolute minimum features the project requires to meet this purpose or goal:
+On any page, we should be able to accomplish one or more of three things:
+Emphasize text based on mouse position in order to assist with ASD (Anchor Words/rare words are highlighted, custom words can be added to emphasized words)
+Separate text from page to assist with dyslexia
+Occlude contents based on cursor position to assist with ADHD
+ 
+What tools, frameworks, libraries, APIs, modules and/or other resources (whatever is specific to your track, and your language) will you use to create this MVP? List them all here. Be specific.
+Chrome extension Manifest 2 or 3
+jQuery.min.js
+Lettering.js
+ 
+If you finish developing the minimum viable product (MVP) with time to spare, what will you work on next? Describe these features here: Be specific.
+TTS that is comfortable, if there is a headless version of UTAU (generally used for synthesis of vocals) I may want to use that.
+Options for each mode of the script.
+Occlusion size & strength
+Font size of separated text
+Emphasis type, possibly particles too
+ 
+What additional tools, frameworks, libraries, APIs, or other resources will these additional features require?
+I don't think I need anything else. I think all I need is in jQuery.
+It's just a matter of actually affecting the page.
+

@@ -93,7 +93,7 @@
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-eval("console.log('Hello World from options main file!');\n\n//# sourceURL=webpack:///./src/scripts/options.js?");
+eval("var options = {};\nchrome.storage.sync.get('options', function (data) {\n  Object.assign(options, data.options);\n  optionsForm.debug.checked = Boolean(options.debug);\n  ;\n});\noptionsForm.debug.addEventListener('change', function (event) {\n  options.debug = event.target.checked;\n  chrome.storage.sync.set({\n    options: options\n  });\n});\n\n//# sourceURL=webpack:///./src/scripts/options.js?");
 
 /***/ })
 
