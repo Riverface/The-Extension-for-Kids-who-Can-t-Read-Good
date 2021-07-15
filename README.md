@@ -7,11 +7,14 @@
 
 ### This is an extension made for Chrome, Firefox, and Opera. It works on Brave too.
 
+
+## Abstract
 In the proposal I was ambitious and only one thing seems to work at the end of the day. For a few weeks I attempted to get contextual blurring working so that only the words around the cursor are legible, so that people with dyslexia and ADHD have an easier time focusing on them.
 
-In working with document ranges, I have found that ranges have a lot of rules I'm still not aware of. The result is primitive and I have some regrets. I made one out of three goals a reality, separating text to a separate window using work from [StackOverflow](https://stackoverflow.com/questions/2444430/how-to-get-a-word-under-cursor-using-javascript). The rest of the time was trying to finagle ranges into selecting an entire div and blurring things out of the cursor range. There are [other](https://developer.mozilla.org/en-US/docs/Web/API/Range/commonAncestorContainer) [leads](https://github.com/timdown/rangy/wiki/Rangy-Object) I was looking at as the project time came to a close.
+In working with document ranges, I have found that ranges have a lot of rules I'm still not aware of. The result is primitive and I have some regrets. I made one out of three goals a reality, separating text to a separate window using a function from [StackOverflow](https://stackoverflow.com/questions/2444430/how-to-get-a-word-under-cursor-using-javascript). The rest of the time was trying to finagle ranges into selecting an entire div and blurring things out of the cursor range. There are [other](https://developer.mozilla.org/en-US/docs/Web/API/Range/commonAncestorContainer) [leads](https://github.com/timdown/rangy/wiki/Rangy-Object) I was looking at as the project time came to a close.
 
 
+>If there's anything new I can learn about it, I'll come back to it. It was fun to see some more base features of the browser that I'd never seen used before.
 
 ## Installation
 
@@ -27,12 +30,12 @@ You can snap it to the cursor as well.
 ## Technologies
 `Manifest 2`
 
-`web-extension-starter`
+`web-extension-starter` - https://github.com/abhijithvijayan/web-extension-starter 
 
+`Rangy` - https://github.com/timdown/rangy
 
 
 
 ## License
-Web Extension Starter - https://github.com/abhijithvijayan/web-extension-starter Copyright (c) 2019 Abhijith Vijayan
 
-Extension - Copyright (c) 2021 Robert Smith
+Copyright (c) 2021 Robert Smith - My work on this project is under CC0 - public domain.

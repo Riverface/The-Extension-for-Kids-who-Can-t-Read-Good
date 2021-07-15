@@ -4,57 +4,58 @@ import browser from 'webextension-polyfill';
 import { v4 } from 'uuid';
 import styles from '../styles/fonts.css';
 import opendyslexic from '../fonts/OpenDyslexic-Regular.ttf'
-import * as googleTTS from 'google-tts-api'; // ES6 or TypeScript
-import { Howl, Howler } from 'howler';
+// import * as googleTTS from 'google-tts-api'; // ES6 or TypeScript
+// import { Howl, Howler } from 'howler';
 var rangy = require("rangy")
-// get audio URL
-const url = googleTTS.getAudioUrl('Hello World', {
-    lang: 'en',
-    slow: false,
-    host: 'https://translate.google.com',
-});
+// // get audio URL
+// const url = googleTTS.getAudioUrl('Hello World', {
+//     lang: 'en',
+//     slow: false,
+//     host: 'https://translate.google.com',
+// });
 
-// these are nodes that would be inside of the elem node.
-const stylerNodes = ['a', 'em', 'strong', 'span', 'div', 'code', 'bold', 'div', 'p', 'dd', 'dt', 'li', 'ul'];
+// these are types of nodes that would typically be inside of the elem node.
+
+// const stylerNodes = ['a', 'em', 'strong', 'span', 'div', 'code', 'bold', 'div', 'p', 'dd', 'dt', 'li', 'ul'];
 
 const toPopup = new BroadcastChannel('toPopup');
 rangy.init();
-let beforePhraseNode = document.createElement('span');
-beforePhraseNode.id = 'beforePhrase';
-let phraseNode = document.createElement('span');
-phraseNode.id = 'phrase';
-let afterPhraseNode = document.createElement('span');
-afterPhraseNode.id = 'afterPhrase';
-let wholeNode = document.createElement('span');
-wholeNode.id = 'wholeNode';
+// let beforePhraseNode = document.createElement('span');
+// beforePhraseNode.id = 'beforePhrase';
+// let phraseNode = document.createElement('span');
+// phraseNode.id = 'phrase';
+// let afterPhraseNode = document.createElement('span');
+// afterPhraseNode.id = 'afterPhrase';
+// let wholeNode = document.createElement('span');
+// wholeNode.id = 'wholeNode';
 
 function applyCssClassToHtml(cssClass, html) {
 
 }
 
-function getOuterRange(selection) {
+// function getOuterRange(selection) {
 
-    var rangeBefore = document.createRange();
-    var rangeAfter = document.createRange();
-    var r = selection.getRangeAt(0);
-    rangeBefore.setStart(r.startContainer, 0);
-    rangeBefore.setEnd(r.startContainer, r.startOffset);
-    rangeAfter.setStart(r.endContainer, r.endOffset);
-    rangeAfter.setEnd(r.endContainer, r.endContainer.length);
+//     var rangeBefore = document.createRange();
+//     var rangeAfter = document.createRange();
+//     var r = selection.getRangeAt(0);
+//     rangeBefore.setStart(r.startContainer, 0);
+//     rangeBefore.setEnd(r.startContainer, r.startOffset);
+//     rangeAfter.setStart(r.endContainer, r.endOffset);
+//     rangeAfter.setEnd(r.endContainer, r.endContainer.length);
 
-    return {
-        before: rangeBefore.toString(),
-        after: rangeAfter.toString()
-    }
-}
-// Thank you very much Andrew K from StackOverflow.
+//     return {
+//         before: rangeBefore.toString(),
+//         after: rangeAfter.toString()
+//     }
+// }
 
-function unwrap(who) {
-    var pa = who.parentNode;
-    while (who.firstChild) {
-        pa.insertBefore(who.firstChild, who);
-    }
-}
+
+// function unwrap(who) {
+//     var pa = who.parentNode;
+//     while (who.firstChild) {
+//         pa.insertBefore(who.firstChild, who);
+//     }
+// }
 
 const nDec = document.createRange();
 const oDec = rangy.createRange();
@@ -198,7 +199,7 @@ $(document).ready(function () {
     $(`#reader`).draggable();
     $(`#readerHUD`).draggable();
     $('#reader').html(`<div id='${readerHandleId}'></div><div id='${readerContentId}'></div>`);
-    $('body').append('<div id="readerHUD"><div id="HUDhandle"></div><div id="hudcontent"><button id="readerDragButton"/>Fix to mouse</button></div><button id="TTSon"/>TTS On</button></div>');
+    $('body').append('<div id="readerHUD"><div id="HUDhandle"></div><div id="hudcontent"><button id="readerDragButton"/>Fix to mouse</button></div></div>');
     const firstFrame = false;
     let timer = 5;
     $('#reader').draggable({ handle: '#readerHandle' });
