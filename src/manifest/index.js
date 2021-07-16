@@ -2,21 +2,21 @@ const pkg = require('../../package.json');
 
 const manifestInput = {
     manifest_version: 2,
-    name: 'Sample WebExtension',
+    name: 'Reader Lens',
     version: pkg.version,
     web_accessible_resources: [
         "/fonts/*", '/assets/*'
     ],
     icons: {
-        '16': 'assets/icons/favicon-16.png',
-        '32': 'assets/icons/favicon-32.png',
-        '48': 'assets/icons/favicon-48.png',
-        '128': 'assets/icons/favicon-128.png',
+        '16': 'assets/icons/icon-16.png',
+        '32': 'assets/icons/icon-32.png',
+        '48': 'assets/icons/icon-48.png',
+        '128': 'assets/icons/icon-128.png',
     },
 
-    description: 'Sample description',
-    homepage_url: 'https://github.com/riverface/web-extension-starter',
-    short_name: 'Sample Name',
+    description: 'Reader Lens is an attempt to help people read better. It separates phrases of text into its own window.',
+    homepage_url: 'https://github.com/Riverface/The-Extension-for-Kids-who-Can-t-Read-Good',
+    short_name: 'Reader Lens',
 
     permissions: ['activeTab', 'storage', "fontSettings", 'http://*/*', 'https://*/*'],
     content_security_policy: "script-src 'self' 'unsafe-eval'; object-src 'self'",
@@ -35,10 +35,10 @@ const manifestInput = {
     browser_action: {
         default_popup: 'popup.html',
         default_icon: {
-            '16': 'assets/icons/favicon-16.png',
-            '32': 'assets/icons/favicon-32.png',
-            '48': 'assets/icons/favicon-48.png',
-            '128': 'assets/icons/favicon-128.png',
+            '16': 'assets/icons/icon-16.png',
+            '32': 'assets/icons/icon-32.png',
+            '48': 'assets/icons/icon-48.png',
+            '128': 'assets/icons/icon-128.png',
         },
         default_title: 'tiny title',
         '__chrome|opera__chrome_style': true,
@@ -61,7 +61,7 @@ const manifestInput = {
     content_scripts: [{
         matches: ['http://*/*', 'https://*/*'],
         js: ['js/contentScript.bundle.js']
-    }, ],
+    },],
 };
 
 module.exports = manifestInput;
